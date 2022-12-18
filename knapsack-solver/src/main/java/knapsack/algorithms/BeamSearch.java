@@ -5,7 +5,9 @@
  * This code is proprietary and cannot be copied or distributed without the express written permission of Marcel Gheorghe Becheanu.
  */
 
-package knapsack.entities;
+package knapsack.algorithms;
 
-public class Node {
+public class BeamSearch {
+
+
 }

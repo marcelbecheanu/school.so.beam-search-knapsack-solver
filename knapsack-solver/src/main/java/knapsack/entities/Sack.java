@@ -7,5 +7,9 @@
 
 package knapsack.entities;
 
-public class Node {
+public class Sack {
+
+    public void Stack(){
+
+    }
 }
