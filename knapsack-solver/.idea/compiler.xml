@@ -6,10 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="knapsack-solver" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="knapsack-solver" target="19" />
-    </bytecodeTargetLevel>
   </component>
 </project>
