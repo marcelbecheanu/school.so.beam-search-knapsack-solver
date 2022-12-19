@@ -5,16 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95771850-fe07-4238-8915-5c5fbad9a5f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/knapsack/algorithms/BeamSearch.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/knapsack/entities/Sack.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/knapsack/handlers/filereader/FileReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/knapsack/handlers/datamanager/DataManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/knapsack/handlers/filemanager/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/knapsack/control/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/entities/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/knapsack/entities/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/entities/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/knapsack/entities/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/entities/Sack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/handlers/filereader/FileReader.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/knapsack/control/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/knapsack/control/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/knapsack/entities/Sack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/knapsack/handlers/filereader/FileReader.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,8 +57,8 @@
     <configuration name="Start Default" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="knapsack.control.Main" />
       <module name="knapsack-solver" />
-      <option name="PROGRAM_PARAMETERS" value="teste" />
-      <option name="WORKING_DIRECTORY" value="../files" />
+      <option name="PROGRAM_PARAMETERS" value="files/ex10000_1.txt 10 60" />
+      <option name="WORKING_DIRECTORY" value="../" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -75,5 +74,16 @@
       <updated>1671336390708</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
