@@ -1,5 +1,8 @@
 package knapsack.entities;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class ItemSack extends Item {
 
     private boolean isOnTheBag;
@@ -35,5 +38,12 @@ public class ItemSack extends Item {
      */
     public void setOnTheBag(boolean onTheBag) {
         isOnTheBag = onTheBag;
+    }
+
+    @Override
+    public String toString(){
+        DecimalFormat df = new DecimalFormat("#.####");
+        df.setRoundingMode(RoundingMode.CEILING);
+        return "{v: " + getValue() + ", w: " + getWeight() + ", r: " + df.format(getRatio()) + ", s: "+ isOnTheBag() +"}";
     }
 }

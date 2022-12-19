@@ -39,7 +39,6 @@ public class Main {
     public static void registers(){
         manager = new DataManager();
     }
-
     public static void loaders(String[] args){
         FileManager.load(args[0], manager);
     }

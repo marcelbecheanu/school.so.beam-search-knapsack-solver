@@ -5,18 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95771850-fe07-4238-8915-5c5fbad9a5f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/knapsack/entities/ItemSack.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/algorithms/BeamSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/knapsack/algorithms/BeamSearch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/knapsack/control/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/entities/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/knapsack/entities/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/handlers/datamanager/DataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/knapsack/handlers/datamanager/DataManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/handlers/filemanager/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/knapsack/handlers/filemanager/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/entities/ItemSack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/knapsack/entities/ItemSack.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/knapsack/algorithms/BeamSearch.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/knapsack/algorithms/BeamSearch.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/knapsack/control/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/knapsack/control/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/knapsack/entities/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/knapsack/entities/Item.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/knapsack/handlers/datamanager/DataManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/knapsack/handlers/datamanager/DataManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/knapsack/handlers/filemanager/FileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/knapsack/handlers/filemanager/FileManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/knapsack/entities/ItemSack.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/knapsack/entities/ItemSack.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +48,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/Marce/Desktop/beam-search-knapsack-solver/knapsack-solver",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
