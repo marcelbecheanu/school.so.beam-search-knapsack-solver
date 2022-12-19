@@ -7,6 +7,9 @@
 
 package knapsack.entities;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class Item {
     // The value of the item.
     private int value;
@@ -75,4 +78,12 @@ public class Item {
     public double getRatio() {
         return ratio;
     }
+
+    @Override
+    public String toString(){
+        DecimalFormat df = new DecimalFormat("#.####");
+        df.setRoundingMode(RoundingMode.CEILING);
+        return "{v: " + value + ", w: " + weight + ", r: " + df.format(ratio) + "}";
+    }
+
 }

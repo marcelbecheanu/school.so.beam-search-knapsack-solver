@@ -7,21 +7,32 @@
 
 package knapsack.control;
 
+import knapsack.algorithms.BeamSearch;
 import knapsack.handlers.datamanager.DataManager;
 import knapsack.handlers.filemanager.FileManager;
 
+import javax.xml.crypto.Data;
+
 public class Main {
     private static DataManager manager;
+    public static DataManager getManager() { return manager; }
+
     public static void main(String[] args) {
         if(args.length != 3){
+            return;
+        } else {
             if(!FileManager.exists(args[0])){
                 System.out.println("File " + args[0] + " does not exist.");
+                return;
             }
-            return;
         }
 
         registers();
         loaders(args);
+
+        manager.printData();
+
+        BeamSearch.initialize();
 
     }
 

@@ -103,15 +103,15 @@ public class DataManager {
      */
     public void printData() {
         // Print the size of the list of items
-        System.out.println("Size of the list of items: " + size);
+        System.out.println("Size of the list of items: " + getSize());
 
         // Print the maximum weight supported by the knapsack
-        System.out.println("Maximum weight supported by the knapsack: " + maxWeight);
+        System.out.println("Maximum weight supported by the knapsack: " + getMaxWeight());
 
         // Print the array of items that can be added to the knapsack
         System.out.println("Array of items that can be added to the knapsack: " + Arrays.toString(items));
 
         // Print the ideal value to be achieved with the items added to the knapsack
-        System.out.println("Ideal value to be achieved with the items added to the knapsack: " + idealValue);
+        System.out.println("Ideal value to be achieved with the items added to the knapsack: " + getIdealValue());
     }
 }
