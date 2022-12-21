@@ -10,7 +10,7 @@ package knapsack.entities;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
-public class Item {
+public class Item implements Comparable<Item> {
     // The value of the item.
     private int value;
     // The weight of the item.
@@ -86,4 +86,8 @@ public class Item {
         return "{v: " + value + ", w: " + weight + ", r: " + df.format(ratio) + "}";
     }
 
+    @Override
+    public int compareTo(Item item) {
+        return Double.compare(item.ratio, this.ratio);
+    }
 }
