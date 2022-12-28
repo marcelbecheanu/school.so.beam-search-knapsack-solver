@@ -109,6 +109,40 @@ public class DataManager {
     }
 
     /**
+     * Calculates the sum of the weights of the items whose indices are marked as 1 in the sol array.
+     *
+     * @param sol array with the current solution to the knapsack problem, where each index represents an item
+     *            and the value 1 indicates that the item is in the knapsack and 0 that it is not
+     * @return the sum of the weights of the items whose indices are marked as 1 in the sol array
+     */
+    public int sumWeights(int[] sol){
+        int sum = 0;
+        for (int i = 0; i < getSize(); i++) {
+            if(sol[i] == 1) {
+                sum += items[i][1];
+            }
+        }
+        return sum;
+    }
+
+    /**
+     * Calculates the sum of the values of the items whose indices are marked as 1 in the sol array.
+     *
+     * @param sol array with the current solution to the knapsack problem, where each index represents an item
+     *            and the value 1 indicates that the item is in the knapsack and 0 that it is not
+     * @return the sum of the values of the items whose indices are marked as 1 in the sol array
+     */
+    public int eval(int[] sol){
+        int sum = 0;
+        for(int i = 0; i < getSize(); i++){
+            if(sol[i] == 1){
+                sum += items[i][0];
+            }
+        }
+        return sum;
+    }
+
+    /**
      * Method to print the data stored in the DataManager instance.
      */
     public void printData() {
@@ -121,7 +155,7 @@ public class DataManager {
         // Print the array of items that can be added to the knapsack
         System.out.println("Array of items that can be added to the knapsack: ");
         for(int row = 0; row < getSize(); row++)
-                System.out.println(row + " : { Value: " + getItems()[row][0] + ", Weight: " + getItems()[row][1] + " }");
+            System.out.println(row + " : { Value: " + getItems()[row][0] + ", Weight: " + getItems()[row][1] + " }");
 
         // Print the ideal value to be achieved with the items added to the knapsack
         System.out.println("Ideal value to be achieved with the items added to the knapsack: " + getIdealValue());

@@ -5,9 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95771850-fe07-4238-8915-5c5fbad9a5f9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/knapsack/entities/Sack.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/algorithms/BeamSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/knapsack/algorithms/BeamSearch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/entities/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/knapsack/entities/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/control/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/knapsack/control/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/entities/Item.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/entities/ItemSack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/entities/Node.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/handlers/datamanager/DataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/knapsack/handlers/datamanager/DataManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/knapsack/handlers/filemanager/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/knapsack/handlers/filemanager/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/knapsack/control/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/knapsack/control/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/knapsack/entities/Item.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/knapsack/entities/ItemSack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/knapsack/entities/Node.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/knapsack/handlers/datamanager/DataManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/knapsack/handlers/datamanager/DataManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/knapsack/handlers/filemanager/FileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/knapsack/handlers/filemanager/FileManager.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +67,7 @@
     <configuration name="Start Default" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="knapsack.control.Main" />
       <module name="knapsack-solver" />
-      <option name="PROGRAM_PARAMETERS" value="files/ex05.txt 10 60" />
+      <option name="PROGRAM_PARAMETERS" value="files/ex08.txt 10 60" />
       <option name="WORKING_DIRECTORY" value="../" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -83,5 +95,15 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/knapsack/control/Main.java</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
