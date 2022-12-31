@@ -4,50 +4,66 @@ import knapsack.control.Main;
 import knapsack.handlers.datamanager.DataManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BeamSearch {
 
     private static ArrayList<int[]> sols;
+    private static DataManager dataManager;
 
     public static void initialize(){
+        dataManager = Main.getManager();
         sols = new ArrayList<int[]>();
 
-        int lb = lowerBound();
-        System.out.println("LowerBound: " + lb);
+        int[] lb = lowerBound();
+        System.out.println("LowerBound: " + dataManager.eval(lb));
 
-        int teste[] = new int[Main.getManager().getSize()];
-        for (int i = 0; i < Main.getManager().getSize(); i++) {
+        int teste[] = new int[dataManager.getSize()];
+        for (int i = 0; i < dataManager.getSize(); i++) {
             teste[i] = -1;
         }
 
         teste[0] = 1;
-        teste[1] = 1;
+        teste[1] = 0;
 
         sols.add(teste);
 
         int ub = upperBound(sols.get(0));
         System.out.println("UpperBound: " + ub);
+        loop();
 
     }
 
-    public static int lowerBound(){
-        DataManager dataManager = Main.getManager();
+    public static void loop(){
+        sols = InitialSolution();
+    }
 
-        int sum = 0;
+
+    public static ArrayList<int[]> GetChilds(ArrayList<int[]> sols){
+        int level =
+    }
+    public static ArrayList<int[]> InitialSolution(){
+        ArrayList<int[]> initial = new ArrayList<int[]>();
+        initial.add(new int[dataManager.getSize()]);
+        Arrays.fill(initial.get(0), -1);
+        return initial;
+    }
+    public static int[] lowerBound(){
+        int sol[] = new int[dataManager.getSize()];
         int capacity = dataManager.getMaxWeight();
 
         for (int i = 0; i < dataManager.getSize(); i++) {
             if((capacity -= dataManager.getItems()[i][1]) >= 0){
-                sum += dataManager.getItems()[i][0];
+                sol[i] = 1;
+            }else{
+                sol[i] = -1;
             }
         }
 
-        return sum;
+        return sol;
     }
 
     public static int upperBound(int[] sol){
-        DataManager dataManager = Main.getManager();
-
         int Wmax = dataManager.getMaxWeight();
         int capacity = dataManager.getMaxWeight();
         int sumInSol = 0;
