@@ -4,13 +4,14 @@ import knapsack.control.Main;
 import knapsack.handlers.datamanager.DataManager;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class ThreadManager {
     private static DataManager dataManager;
     private static ArrayList<ThreadAlgorithm> threads;
+
+    public static int[] globalSolution;
+    public static int globalValue;
+
     public ThreadManager(int processors, int time){
         dataManager = Main.getManager();
         threads = new ArrayList<ThreadAlgorithm>();

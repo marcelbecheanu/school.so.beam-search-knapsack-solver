@@ -11,9 +11,10 @@ import java.util.Random;
 public class Algorithm {
     private DataManager dataManager;
     private Random random;
-
     private ArrayList<int[]> solutions;
 
+    private long startedTime;
+    private int time;
     private int alpha;
     private int[] solutionOfLowerBound;
     private int valueOfLowerBound;
@@ -24,23 +25,26 @@ public class Algorithm {
         this.alpha = dataManager.getAlpha();
 
         this.random = new Random();
-        this.random.setSeed(System.currentTimeMillis() / random.nextInt(100));
+        this.random.setSeed(System.currentTimeMillis() / (random.nextInt(100) + 1));
 
         this.solutionOfLowerBound = this.getLowerBound();
         this.valueOfLowerBound = dataManager.eval(this.solutionOfLowerBound);
-
+        this.startedTime = -1;
+        this.time = -1;
     }
 
-    public Algorithm(int[] solutionOfLowerBound, int valueOfLowerBound){
+    public Algorithm(int[] solutionOfLowerBound, int valueOfLowerBound, int time){
         this.dataManager = Main.getManager();
         this.solutions = new ArrayList<int[]>();
         this.alpha = dataManager.getAlpha();
 
         this.random = new Random();
-        this.random.setSeed(System.currentTimeMillis() / random.nextInt(100));
+        this.random.setSeed(System.currentTimeMillis() / (random.nextInt(100) + 1));
 
         this.solutionOfLowerBound = solutionOfLowerBound;
         this.valueOfLowerBound = valueOfLowerBound;
+        this.startedTime = System.nanoTime();
+        this.time = time;
     }
 
     public void reset() {
@@ -51,7 +55,7 @@ public class Algorithm {
     public int[] getBeamSearch(){
         reset();
         solutions = getInitialSolution();
-        while(solutions.size() > 0){
+        while(solutions.size() > 0 && isValidTime()){
             ArrayList<int[]> childs = getChilds(solutions);
             Iterator<int[]> iterator = childs.iterator();
             while (iterator.hasNext()) {
@@ -71,6 +75,11 @@ public class Algorithm {
         }
         return solutionOfLowerBound;
     }
+
+    public boolean isValidTime(){
+        return time == -1 ? true : ((((long) System.nanoTime() - startedTime) / 1000000000) <= time);
+    }
+
     public ArrayList<int[]> selectSolution(ArrayList<int[]> solutions, int alpha) {
         ArrayList<int[]> filteredSolutions = new ArrayList<>(solutions);
         while(filteredSolutions.size() > alpha){
@@ -78,6 +87,7 @@ public class Algorithm {
         }
         return filteredSolutions;
     }
+
     public ArrayList<int[]> getChilds(ArrayList<int[]> solutions) {
         ArrayList<int[]> childs = new ArrayList<>();
         for (int[] child : solutions) {
@@ -161,4 +171,15 @@ public class Algorithm {
         }
     }
 
+    public int[] getSolutionOfLowerBound() {
+        return solutionOfLowerBound;
+    }
+
+    public int getValueOfLowerBound() {
+        return valueOfLowerBound;
+    }
+
+    public long getStartedTime() {
+        return startedTime;
+    }
 }
