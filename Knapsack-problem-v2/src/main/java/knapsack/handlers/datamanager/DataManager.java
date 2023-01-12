@@ -1,5 +1,7 @@
 package knapsack.handlers.datamanager;
 
+import knapsack.algorithm.Algorithm;
+
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -108,6 +110,11 @@ public class DataManager {
 
     private void setAlpha(int alpha) {
         this.alpha = alpha;
+    }
+
+    public int[] getLowerBound(){
+        Algorithm algorithm = new Algorithm();
+        return algorithm.getLowerBound();
     }
 
     public void sort(){

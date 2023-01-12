@@ -9,9 +9,11 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class Algorithm {
-    private ArrayList<int[]> solutions;
     private DataManager dataManager;
     private Random random;
+
+    private ArrayList<int[]> solutions;
+
     private int alpha;
     private int[] solutionOfLowerBound;
     private int valueOfLowerBound;
