@@ -19,6 +19,9 @@ public class DataManager {
     // Ideal value to be achieved with the items added to the knapsack
     private int idealValue;
 
+    // Alpha number is n/2 calc.
+    private int alpha;
+
     /**
      * Constructor to initialize the class attributes.
      */
@@ -39,7 +42,7 @@ public class DataManager {
      *
      * @param size New size of the list of items
      */
-    public void setSize(int size) {
+    private void setSize(int size) {
         this.size = size;
     }
 
@@ -77,6 +80,8 @@ public class DataManager {
      */
     public void setItems(int[][] items) {
         this.items = items;
+        this.setSize(items.length);
+        this.setAlpha((int) Math.ceil((double)this.getSize() / 2));
     }
 
     /**
@@ -95,6 +100,14 @@ public class DataManager {
      */
     public void setIdealValue(int idealValue) {
         this.idealValue = idealValue;
+    }
+
+    public int getAlpha() {
+        return alpha;
+    }
+
+    private void setAlpha(int alpha) {
+        this.alpha = alpha;
     }
 
     public void sort(){
@@ -143,6 +156,26 @@ public class DataManager {
     }
 
     /**
+     * Calculates the sum of the weight of the items is valid for the sack.
+     *
+     * @param solution array with the current solution to the knapsack problem, where each index represents an item
+     *            and the value 1 indicates that the item is in the knapsack and 0 that it is not
+     * @return If is valid return true and if not return false.
+     */
+    public boolean isValidWeight(int[] solution){
+        int sum = 0;
+        for (int row = 0; row < solution.length; row++) {
+            if(solution[row] == 1){
+                sum += items[row][1];
+                if(sum > getMaxWeight()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
      * Method to print the data stored in the DataManager instance.
      */
     public void printData() {
@@ -159,5 +192,8 @@ public class DataManager {
 
         // Print the ideal value to be achieved with the items added to the knapsack
         System.out.println("Ideal value to be achieved with the items added to the knapsack: " + getIdealValue());
+
+        // Alpha number that can be calculated by n/2;
+        System.out.println("Alpha: " + getAlpha());
     }
 }

@@ -27,14 +27,14 @@ public class FileManager {
 
         try (BufferedReader br = new BufferedReader(new FileReader(dir))) {
             // Read the number of items and initialize the values and weights arrays
-            manager.setSize(Integer.parseInt(br.readLine()));
-            int[][] items = new int[manager.getSize()][2];
+            int size = Integer.parseInt(br.readLine());
+            int[][] items = new int[size][2];
 
             // Read the maximum weight
             manager.setMaxWeight(Integer.parseInt(br.readLine()));
 
             // Read the values and weights of each item
-            for (int i = 0; i < manager.getSize(); i++) {
+            for (int i = 0; i < size; i++) {
                 String[] itemData = br.readLine().split(" ");
                 items[i][0] = Integer.parseInt(itemData[0]);
                 items[i][1] = Integer.parseInt(itemData[1]);

@@ -3,48 +3,67 @@ package knapsack.algorithm;
 import knapsack.control.Main;
 import knapsack.handlers.datamanager.DataManager;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 
 public class BeamSearch {
 
     private static ArrayList<int[]> sols;
     private static DataManager dataManager;
+    private static int alpha;
 
     public static void initialize(){
         dataManager = Main.getManager();
-        sols = new ArrayList<int[]>();
-        int[] global = new int[dataManager.getSize()];
+        alpha = dataManager.getAlpha();
 
-        for (int i = 0; i < Math.pow(dataManager.getSize(),2); i++) {
+        if(true) {
+            int[] global = new int[dataManager.getSize()];
 
-            int[] result = loop();
-            for (int c = 0; c < result.length; c++) {
-                if(result[c] == -1){
-                    result[c] = 0;
+            long avgtime = 0;
+
+            for (int i = 0; i < 5; i++) {
+                 long startTime = System.nanoTime();
+
+                int[] result = loop();
+
+
+                if(dataManager.eval(global) <= dataManager.eval(result)){
+                    global = result;
                 }
-            }
 
-            if(dataManager.eval(global) <= dataManager.eval(result)){
-                global = result;
-            }
+                System.out.println("Is Valid: " + dataManager.isValidWeight(result));
+                System.out.println("Result: " + Arrays.toString(result));
+                System.out.println("Value: " + dataManager.eval(result));
+                System.out.println("Weight: " + dataManager.sumWeights(result));
 
-            System.out.println("Result: " + Arrays.toString(result));
-            System.out.println("Value: " + dataManager.eval(result));
-            System.out.println("Weight: " + dataManager.sumWeights(result));
+
+                long endTime = System.nanoTime();
+                long timeElapsed = endTime - startTime;
+
+                if(avgtime == 0){
+                    avgtime = timeElapsed;
+                }else{
+                    avgtime = ((avgtime + timeElapsed) / 2);
+                }
+
+
+
+                System.out.println("Execution time in nanoseconds: " + timeElapsed);
+                System.out.println("Execution time in milliseconds: " + timeElapsed / 1000000);
+                System.out.println("Execution avg time in nanoseconds: " + avgtime);
+                System.out.println("Execution avg time in milliseconds: " + avgtime / 1000000);
+
+
+            }
+            System.out.println("Global----");
+            System.out.println("Is Valid: " + dataManager.isValidWeight(global));
+            System.out.println("Result: " + Arrays.toString(global));
+            System.out.println("Value: " + dataManager.eval(global));
+            System.out.println("Weight: " + dataManager.sumWeights(global));
         }
-        System.out.println("Global----");
-        System.out.println("Result: " + Arrays.toString(global));
-        System.out.println("Value: " + dataManager.eval(global));
-        System.out.println("Weight: " + dataManager.sumWeights(global));
-
     }
-
     public static int[] loop(){
-        sols = InitialSolution();
-        int[] lowerBoundSol = lowerBound();
+        sols = getInitialSolution();
+        int[] lowerBoundSol = getLowerBound();
         int lowerBoundEval = dataManager.eval(lowerBoundSol);
 
         while(sols.size() > 0){
@@ -53,12 +72,7 @@ public class BeamSearch {
             while (iterator.hasNext()) {
                 int[] child = iterator.next();
 
-                if(dataManager.sumWeights(child) > dataManager.getMaxWeight()){
-                    iterator.remove();
-                    continue;
-                }
-
-                int ub = upperBound(child);
+                int ub = getUpperBound(child);
                 if(ub >= lowerBoundEval){
                     if(dataManager.eval(child) >= lowerBoundEval) {
                         lowerBoundSol = child;
@@ -68,75 +82,60 @@ public class BeamSearch {
                     iterator.remove();
                 }
             }
-            sols = selectSolution(childs);  // temos um problema aqui....
-             //sols = childs;
+            sols = selectSolution(childs, alpha);
         }
         return lowerBoundSol;
     }
-
-    public static ArrayList<int[]> selectSolution(ArrayList<int[]> sols) {
+    public static ArrayList<int[]> selectSolution(ArrayList<int[]> sols, int alpha) {
         ArrayList<int[]> temp = new ArrayList<>(sols);
-        long seed = System.currentTimeMillis();
         Random random = new Random();
-        random.setSeed(seed);
-        while(temp.size() > (int) Math.ceil((double)sols.size() / 2)){
-            int randomInt = random.nextInt(0, sols.size());
-            temp.remove(randomInt);
+        random.setSeed(System.currentTimeMillis());
+        while(temp.size() > alpha){
+            temp.remove(random.nextInt(0, temp.size()));
         }
         return temp;
     }
 
-    public static ArrayList<int[]> getChilds(ArrayList<int[]> sols) {
-        ArrayList<int[]> temp = new ArrayList<int[]>();
-        for (int i = 0; i < sols.size(); i++) {
+    public static ArrayList<int[]> getChilds(ArrayList<int[]> solutions) {
+        ArrayList<int[]> childs = new ArrayList<>();
+        for (int[] child : solutions) {
+            for (int index = 0; index < child.length; index++) {
+                if(child[index] == -1){
+                    int[] cloneDenied = child.clone(),
+                            cloneAccepted = child.clone();
 
-            int[] solTemp = sols.get(i);
-            int level = -1;
+                    cloneDenied[index] = 0;
+                    cloneAccepted[index] = 1;
 
-            for (int j = 0; j < solTemp.length; j++) {
-                if (solTemp[j] == -1) {
-                    level = j;
+                    childs.add(cloneDenied);
+                    if(dataManager.isValidWeight(cloneAccepted))
+                        childs.add(cloneAccepted);
+
                     break;
                 }
             }
-
-            if(level != -1){
-                int[] temp1 = solTemp.clone();
-                temp1[level] = 1;
-                temp.add(temp1);
-
-                int[] temp2 = solTemp.clone();
-                temp2[level] = 0;
-                temp.add(temp2);
-
-            }
         }
-        return temp;
+        return childs;
     }
-
-    public static ArrayList<int[]> InitialSolution(){
+    public static ArrayList<int[]> getInitialSolution(){
         ArrayList<int[]> initial = new ArrayList<int[]>();
         initial.add(new int[dataManager.getSize()]);
         Arrays.fill(initial.get(0), -1);
         return initial;
     }
-
-    public static int[] lowerBound(){
-        int sol[] = new int[dataManager.getSize()];
+    public static int[] getLowerBound(){
+        int solution[] = new int[dataManager.getSize()];
         int capacity = dataManager.getMaxWeight();
-
         for (int i = 0; i < dataManager.getSize(); i++) {
             if((capacity -= dataManager.getItems()[i][1]) >= 0){
-                sol[i] = 1;
+                solution[i] = 1;
             }else{
-                sol[i] = -1;
+                solution[i] = -1;
             }
         }
-
-        return sol;
+        return solution;
     }
-
-    public static int upperBound(int[] sol){
+    public static int getUpperBound(int[] sol){
         int Wmax = dataManager.getMaxWeight();
         int capacity = dataManager.getMaxWeight();
         int sumInSol = 0;
@@ -161,9 +160,16 @@ public class BeamSearch {
 
         // Step 2 - Max
         int sumVal = dataManager.eval(sol);
-        if(c == -1 || c+1 >= dataManager.getSize()){
+        if(c == -1 || c+1 >= dataManager.getSize()) {
             return sumVal + sumValInSol;
-        } else {
+        } /*
+        com isto da erro...
+        else if(c+1 >= dataManager.getSize()) {
+            int MaxIntStep2Part2 = (int) Math.floor(dataManager.getItems()[c][0] - (dataManager.getItems()[c][1] - Wmax) * ((double) dataManager.getItems()[c-1][0] /  dataManager.getItems()[c-1][1]));
+            MaxIntStep2Part2 = (sumVal + sumValInSol  + MaxIntStep2Part2);
+
+            return MaxIntStep2Part2;
+        } */else {
             int MaxIntStep2Part1 = (int) Math.floor(Wmax * ((double) dataManager.getItems()[c+1][0] / dataManager.getItems()[c+1][1]));
             MaxIntStep2Part1 = (sumVal + sumValInSol  + MaxIntStep2Part1);
 
