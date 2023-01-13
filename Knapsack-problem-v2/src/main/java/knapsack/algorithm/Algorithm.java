@@ -2,6 +2,7 @@ package knapsack.algorithm;
 
 import knapsack.control.Main;
 import knapsack.handlers.datamanager.DataManager;
+import knapsack.handlers.threadmanager.ThreadManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +11,8 @@ import java.util.Random;
 
 public class Algorithm {
     private DataManager dataManager;
+    private ThreadManager threadManager;
+
     private Random random;
     private ArrayList<int[]> solutions;
 
@@ -18,9 +21,13 @@ public class Algorithm {
     private int alpha;
     private int[] solutionOfLowerBound;
     private int valueOfLowerBound;
+    private int runs;
+
 
     public Algorithm(){
         this.dataManager = Main.getManager();
+        this.threadManager = Main.getThreadManager();
+
         this.solutions = new ArrayList<int[]>();
         this.alpha = dataManager.getAlpha();
 
@@ -31,10 +38,13 @@ public class Algorithm {
         this.valueOfLowerBound = dataManager.eval(this.solutionOfLowerBound);
         this.startedTime = -1;
         this.time = -1;
+        this.runs = 0;
     }
 
     public Algorithm(int[] solutionOfLowerBound, int valueOfLowerBound, int time){
         this.dataManager = Main.getManager();
+        this.threadManager = Main.getThreadManager();
+
         this.solutions = new ArrayList<int[]>();
         this.alpha = dataManager.getAlpha();
 
@@ -45,12 +55,58 @@ public class Algorithm {
         this.valueOfLowerBound = valueOfLowerBound;
         this.startedTime = System.nanoTime();
         this.time = time;
+        this.runs = 0;
+
     }
 
     public void reset() {
         this.solutionOfLowerBound = getLowerBound();
         this.valueOfLowerBound = dataManager.eval(solutionOfLowerBound);
     }
+
+    public int[] getBeamSearchGlobal(){
+        reset();
+        solutions = getInitialSolution();
+        while(solutions.size() > 0 && isValidTime()){
+            runs+= 1;
+
+            ArrayList<int[]> childs = getChilds(solutions);
+            Iterator<int[]> iterator = childs.iterator();
+            while (iterator.hasNext()) {
+                int[] child = iterator.next();
+                int valueOfUpperBound = getUpperBound(child);
+                if(valueOfUpperBound >= valueOfLowerBound){
+                    int cacheOfValueChild = dataManager.eval(child);
+                    if(cacheOfValueChild >= valueOfLowerBound) {
+                        solutionOfLowerBound = child;
+                        valueOfLowerBound = cacheOfValueChild;
+
+                        // Global Data Update
+                        if(valueOfLowerBound > threadManager.globalValue){
+                            try {
+                                threadManager.semaphoreToAccessToGlobal.acquire();
+                                if(valueOfLowerBound > threadManager.globalValue){
+                                    threadManager.globalValue = valueOfLowerBound;
+                                    threadManager.globalSolution = solutionOfLowerBound;
+                                    threadManager.runs = runs;
+                                    threadManager.runtime = ((long) System.nanoTime() - startedTime) / 100000;
+                                }
+                            }catch (InterruptedException interruptedException){
+                                System.out.printf("InterruptedException: " + interruptedException.getMessage());
+                            }
+                            threadManager.semaphoreToAccessToGlobal.release();
+                        }
+
+                    }
+                } else {
+                    iterator.remove();
+                }
+            }
+            solutions = selectSolution(childs, alpha);
+        }
+        return solutionOfLowerBound;
+    }
+
 
     public int[] getBeamSearch(){
         reset();

@@ -30,9 +30,7 @@ public class Main {
         getManager().sort();
         getManager().printData();
 
-        threadManager = new ThreadManager(4, 20);
-
-
+        threadManager = new ThreadManager(8, 20);
     }
 
     public static void registers(){
