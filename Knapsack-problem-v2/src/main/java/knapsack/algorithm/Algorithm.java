@@ -2,7 +2,6 @@ package knapsack.algorithm;
 
 import knapsack.control.Main;
 import knapsack.handlers.datamanager.DataManager;
-import knapsack.handlers.threadmanager.ThreadManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +10,6 @@ import java.util.Random;
 
 public class Algorithm {
     private DataManager dataManager;
-    private ThreadManager threadManager;
 
     private Random random;
     private ArrayList<int[]> solutions;
@@ -20,13 +18,15 @@ public class Algorithm {
     private int time;
     private int alpha;
     private int[] solutionOfLowerBound;
+    private long finishedTimeOfLowerBound;
     private int valueOfLowerBound;
+    private int runsSol;
+
     private int runs;
 
 
     public Algorithm(){
         this.dataManager = Main.getManager();
-        this.threadManager = Main.getThreadManager();
 
         this.solutions = new ArrayList<int[]>();
         this.alpha = dataManager.getAlpha();
@@ -37,13 +37,14 @@ public class Algorithm {
         this.solutionOfLowerBound = this.getLowerBound();
         this.valueOfLowerBound = dataManager.eval(this.solutionOfLowerBound);
         this.startedTime = -1;
+        this.finishedTimeOfLowerBound = 0;
         this.time = -1;
         this.runs = 0;
+        this.runsSol = 0;
     }
 
     public Algorithm(int[] solutionOfLowerBound, int valueOfLowerBound, int time){
         this.dataManager = Main.getManager();
-        this.threadManager = Main.getThreadManager();
 
         this.solutions = new ArrayList<int[]>();
         this.alpha = dataManager.getAlpha();
@@ -54,74 +55,33 @@ public class Algorithm {
         this.solutionOfLowerBound = solutionOfLowerBound;
         this.valueOfLowerBound = valueOfLowerBound;
         this.startedTime = System.nanoTime();
+        this.finishedTimeOfLowerBound = 0;
         this.time = time;
         this.runs = 0;
+        this.runsSol = 0;
 
     }
-
     public void reset() {
         this.solutionOfLowerBound = getLowerBound();
         this.valueOfLowerBound = dataManager.eval(solutionOfLowerBound);
     }
 
-    public int[] getBeamSearchGlobal(){
-        reset();
-        solutions = getInitialSolution();
-        while(solutions.size() > 0 && isValidTime()){
-            runs+= 1;
-
-            ArrayList<int[]> childs = getChilds(solutions);
-            Iterator<int[]> iterator = childs.iterator();
-            while (iterator.hasNext()) {
-                int[] child = iterator.next();
-                int valueOfUpperBound = getUpperBound(child);
-                if(valueOfUpperBound >= valueOfLowerBound){
-                    int cacheOfValueChild = dataManager.eval(child);
-                    if(cacheOfValueChild >= valueOfLowerBound) {
-                        solutionOfLowerBound = child;
-                        valueOfLowerBound = cacheOfValueChild;
-
-                        // Global Data Update
-                        if(valueOfLowerBound > threadManager.globalValue){
-                            try {
-                                threadManager.semaphoreToAccessToGlobal.acquire();
-                                if(valueOfLowerBound > threadManager.globalValue){
-                                    threadManager.globalValue = valueOfLowerBound;
-                                    threadManager.globalSolution = solutionOfLowerBound;
-                                    threadManager.runs = runs;
-                                    threadManager.runtime = ((long) System.nanoTime() - startedTime) / 100000;
-                                }
-                            }catch (InterruptedException interruptedException){
-                                System.out.printf("InterruptedException: " + interruptedException.getMessage());
-                            }
-                            threadManager.semaphoreToAccessToGlobal.release();
-                        }
-
-                    }
-                } else {
-                    iterator.remove();
-                }
-            }
-            solutions = selectSolution(childs, alpha);
-        }
-        return solutionOfLowerBound;
-    }
-
-
     public int[] getBeamSearch(){
-        reset();
         solutions = getInitialSolution();
         while(solutions.size() > 0 && isValidTime()){
             ArrayList<int[]> childs = getChilds(solutions);
             Iterator<int[]> iterator = childs.iterator();
+            this.runs++;
             while (iterator.hasNext()) {
                 int[] child = iterator.next();
                 int valueOfUpperBound = getUpperBound(child);
                 if(valueOfUpperBound >= valueOfLowerBound){
                     int cacheOfValueChild = dataManager.eval(child);
-                    if(cacheOfValueChild >= valueOfLowerBound) {
+                    if(cacheOfValueChild > valueOfLowerBound) {
                         solutionOfLowerBound = child;
                         valueOfLowerBound = cacheOfValueChild;
+                        finishedTimeOfLowerBound = System.nanoTime();
+                        runsSol = runs;
                     }
                 } else {
                     iterator.remove();
@@ -143,6 +103,8 @@ public class Algorithm {
         }
         return filteredSolutions;
     }
+
+
 
     public ArrayList<int[]> getChilds(ArrayList<int[]> solutions) {
         ArrayList<int[]> childs = new ArrayList<>();
@@ -199,7 +161,7 @@ public class Algorithm {
                 sumOutSol += dataManager.getItems()[i][1];
                 sumValInSol += dataManager.getItems()[i][0]; // step 2
             }
-            if (solution[i] == -1 && capacity < 0 && c == -1){
+            if (solution[i] == -1 && capacity < 0 && c == -1){ // tomar atenção aqui na capacidade
                 c = i;
             }
             capacity -= dataManager.getItems()[i][1];
@@ -237,5 +199,17 @@ public class Algorithm {
 
     public long getStartedTime() {
         return startedTime;
+    }
+
+    public int getRuns() {
+        return runs;
+    }
+
+    public long getFinishedTimeOfLowerBound() {
+        return finishedTimeOfLowerBound;
+    }
+
+    public int getRunsSol() {
+        return runsSol;
     }
 }

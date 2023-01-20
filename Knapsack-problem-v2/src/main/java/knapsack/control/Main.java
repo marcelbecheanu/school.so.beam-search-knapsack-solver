@@ -5,13 +5,14 @@ import knapsack.handlers.datamanager.DataManager;
 import knapsack.handlers.filemanager.FileManager;
 import knapsack.handlers.threadmanager.ThreadManager;
 
+import java.sql.Array;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
     private static DataManager dataManager;
-    private static ThreadManager threadManager;
     public static DataManager getManager() { return dataManager; }
-    public static ThreadManager getThreadManager() { return threadManager; }
 
     public static void main(String[] args) {
         if(args.length != 3){
@@ -30,7 +31,7 @@ public class Main {
         getManager().sort();
         getManager().printData();
 
-        threadManager = new ThreadManager(8, 20);
+        ThreadManager.initialize(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
     }
 
     public static void registers(){

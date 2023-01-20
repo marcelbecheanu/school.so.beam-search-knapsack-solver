@@ -136,6 +136,9 @@ public class DataManager {
      * @return the sum of the weights of the items whose indices are marked as 1 in the sol array
      */
     public int sumWeights(int[] sol){
+        if(sol == null)
+            return 0;
+
         int sum = 0;
         for (int i = 0; i < getSize(); i++) {
             if(sol[i] == 1) {
@@ -170,6 +173,9 @@ public class DataManager {
      * @return If is valid return true and if not return false.
      */
     public boolean isValidWeight(int[] solution){
+        if(solution == null)
+            return false;
+
         int sum = 0;
         for (int row = 0; row < solution.length; row++) {
             if(solution[row] == 1){

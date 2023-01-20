@@ -1,8 +1,10 @@
 package knapsack.handlers.threadmanager;
 
+import knapsack.algorithm.Algorithm;
 import knapsack.control.Main;
 import knapsack.handlers.datamanager.DataManager;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
@@ -18,7 +20,7 @@ public class ThreadManager {
     public static int runs;
 
 
-    public ThreadManager(int processors, int time){
+    public static void initialize(int processors, int time){
         dataManager = Main.getManager();
         semaphoreToAccessToGlobal = new Semaphore(1);
 
@@ -26,6 +28,11 @@ public class ThreadManager {
 
         int[] solutionOfLowerBound = dataManager.getLowerBound();
         int valueOfLowerBound = dataManager.eval(dataManager.getLowerBound());
+
+        globalSolution = solutionOfLowerBound;
+        globalValue = valueOfLowerBound;
+        runtime = 0;
+        runs = 0;
 
         for (int processor = 0; processor < processors; processor++) {
             ThreadAlgorithm thread = new ThreadAlgorithm(solutionOfLowerBound, valueOfLowerBound, time);
@@ -43,8 +50,12 @@ public class ThreadManager {
 
         System.out.println(" > Valor da soma total: " + globalValue);
         System.out.println(" > Valor do peso total: " + dataManager.sumWeights(globalSolution));
+
+        double seconds = runtime / 1e9;
+        DecimalFormat df = new DecimalFormat("#.####");
         System.out.println(" > Número de iterações necessárias: " + runs);
-        System.out.println(" > Tempo total de execução: " + runtime);
+
+        System.out.println(" > Tempo total de execução: " + df.format(seconds));
     }
 
 
