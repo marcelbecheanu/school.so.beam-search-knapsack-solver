@@ -6,11 +6,14 @@ import knapsack.handlers.datamanager.DataManager;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Semaphore;
 
 public class ThreadManager {
     private static DataManager dataManager;
-    private static ArrayList<ThreadAlgorithm> threads;
+    public static ArrayList<ThreadAlgorithm> threads;
     public static Semaphore semaphoreToAccessToGlobal;
 
     public static int[] globalSolution;
@@ -20,7 +23,7 @@ public class ThreadManager {
     public static int runs;
 
 
-    public static void initialize(int processors, int time){
+    public static void initialize(int processors, int time, int percent){
         dataManager = Main.getManager();
         semaphoreToAccessToGlobal = new Semaphore(1);
 
@@ -35,7 +38,7 @@ public class ThreadManager {
         runs = 0;
 
         for (int processor = 0; processor < processors; processor++) {
-            ThreadAlgorithm thread = new ThreadAlgorithm(solutionOfLowerBound, valueOfLowerBound, time);
+            ThreadAlgorithm thread = new ThreadAlgorithm(solutionOfLowerBound, valueOfLowerBound, time, percent);
             threads.add(thread);
             thread.start();
         }
@@ -53,11 +56,8 @@ public class ThreadManager {
 
         double seconds = runtime / 1e9;
         DecimalFormat df = new DecimalFormat("#.####");
+
         System.out.println(" > Número de iterações necessárias: " + runs);
-
         System.out.println(" > Tempo total de execução: " + df.format(seconds));
-        System.out.println(" > Lb: " + dataManager.eval(dataManager.getLowerBound()));
     }
-
-
 }

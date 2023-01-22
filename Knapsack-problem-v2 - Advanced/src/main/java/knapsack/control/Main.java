@@ -15,7 +15,7 @@ public class Main {
     public static DataManager getManager() { return dataManager; }
 
     public static void main(String[] args) {
-        if(args.length != 3){
+        if(args.length != 4){
             System.out.println("Invalid arguments!!!!");
             return;
         } else {
@@ -31,8 +31,7 @@ public class Main {
         getManager().sort();
         getManager().printData();
 
-        for (int i = 0; i < 10; i++)
-            ThreadManager.initialize(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+        ThreadManager.initialize(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
     }
 
     public static void registers(){
